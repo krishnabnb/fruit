@@ -27,7 +27,7 @@ class Body extends React.Component {
   }
 
   handleDelete(id){
-    fetch(`http://localhost:3000/api/v1/items/${id}`,
+    fetch(`http://localhost:3000/api/v1/fruits/${id}`,
     {
       method: 'DELETE',
       headers: {
@@ -60,7 +60,7 @@ class Body extends React.Component {
   }
 
   handleUpdate(fruit){
-    fetch(`http://localhost:3000/api/v1/fruits/${fruit.id}`,
+    fetch(`http://localhost:3000/api/v1/fruits/${fruit}`,
     {
       method: 'PUT',
       body: JSON.stringify({fruit: fruit}),
@@ -71,6 +71,7 @@ class Body extends React.Component {
         this.updateFruit(fruit)
       })
   }
+
   updateFruit(fruit){
     let newFruits = this.state.fruits.filter((f) => f.id !== fruit.id)
     newFruits.push(fruit)
@@ -78,6 +79,44 @@ class Body extends React.Component {
       fruits: newFruits
     })
   }
+
+  // handleUpdate(fruit) {
+  //   if (!fruit || !fruit.id) {
+  //     console.error('Invalid fruit object:', fruit);
+  //     return;
+  //   }
+
+  //   fetch(`http://localhost:3000/api/v1/fruits/${fruit.id}`, {
+  //     method: 'PUT',
+  //     body: JSON.stringify({ fruit: fruit }),
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  //   .then(response => {
+  //     if (!response.ok) {
+  //       throw new Error('Failed to update fruit');
+  //     }
+  //     return response.json();
+  //   })
+  //   .then(updatedFruit => {
+  //     this.updateFruit(updatedFruit);
+  //   })
+  //   .catch(error => {
+  //     console.error('Error updating fruit:', error);
+  //   });
+  // }
+
+  // updateFruit(updatedFruit) {
+  //   const updatedFruits = this.state.fruits.map(fruit => {
+  //     if (fruit.id === updatedFruit.id) {
+  //       return updatedFruit;
+  //     }
+  //     return fruit;
+  //   });
+  //   this.setState({ fruits: updatedFruits });
+  // }
+
 
   componentDidMount(){
     fetch('/api/v1/fruits.json')
@@ -92,7 +131,9 @@ class Body extends React.Component {
           <td>{fruit.description}</td>
           <td>
             <button onClick={() => this.handleDelete(fruit.id)}>Delete</button>
-
+          </td>
+          <td>
+            <button onClick={() => this.handleUpdate(fruit.id)}>Edit</button>
           </td>
 
         </tr>
@@ -108,7 +149,8 @@ class Body extends React.Component {
               <tr>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Action</th>
+                <th>Delete</th>
+                <th>Edit</th>
               </tr>
             </thead>
             <tbody>
