@@ -31,4 +31,5 @@ class Api::V1::FruitsController < ApplicationController
   def fruit_params
     params.require(:fruit).permit(:name, :description)
   end
+
 end
